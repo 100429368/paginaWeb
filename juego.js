@@ -67,7 +67,7 @@ class Coche {
         if (this.v < 0 && (this.x + this.w) < 0) this.x = limiteAncho;
     }
 
-    dibujar(ctx) { //PUEDE DIBUJAR 3 COCHES, DE 30, DE 45 O DE 60
+    dibujar(ctx) { //PUEDE DIBUJAR 3 COCHES, DE 30, DE 45 O DE 60 TODOOOOOOOO
         ctx.drawImage(this.imagen, this.x, this.y, this.w, this.h);
     }
 
