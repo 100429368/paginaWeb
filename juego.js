@@ -16,6 +16,8 @@ class Jugador {
         this.size = 20;
         this.x = x;
         this.y = y;
+        this.imagen = new Image();
+        this.imagen.src = 'jugador.png';
     }
 
     mover(tecla, limiteAncho, limiteAlto) {
@@ -31,9 +33,9 @@ class Jugador {
         if (this.y + this.size > limiteAlto) this.y = limiteAlto - this.size;
     }
 
-    dibujar(ctx) {
-        ctx.fillStyle = "green";
-        ctx.fillRect(this.x, this.y, this.size, this.size);
+ dibujar(ctx) {
+            ctx.drawImage(this.imagen, this.x, this.y, this.size, this.size);
+        
     }
 }
 
@@ -131,7 +133,7 @@ function log(text) {
 }
 
 // ==========================================
-// 4. ARRANQUE (Al cargar la ventana)
+// 4. ARRANQUE (Al cargar la ventana!!)
 // ==========================================
 window.onload = function() {
     canvas = document.getElementById("canvas");
