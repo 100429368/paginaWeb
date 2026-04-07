@@ -70,13 +70,20 @@ class Coche {
 // 3. FUNCIONES DEL JUEGO
 // ==========================================
 function crearCoches() {
-    coches = [
-        new Coche(0, 320, 40, 20, 2),
-        new Coche(400, 270, 40, 20, -3),
-        new Coche(0, 220, 40, 20, 2.5),
-        new Coche(400, 170, 50, 20, -2),
-        new Coche(0, 120, 30, 20, 4)
-    ];
+    coches = [];
+    const filas = 8;        // nº filas coches
+    const margenSuelo = 60; // Espacio del inicio
+    const margenTecho = 40; // Espacio del final
+    
+    const zonaTráfico = canvas.height - margenSuelo - margenTecho; //Espacio donde hay coches
+    const distanciaEntreFilas = zonaTráfico / filas;
+
+    for (let i = 0; i < filas; i++) {
+        let y = margenTecho + (i * distanciaEntreFilas);
+        let anchoCoche = 30 + Math.random() * 30; // diferentes tamaños de coche
+        let velocidad = (Math.random() * 3 + 1) * (i % 2 === 0 ? 1 : -1); // Dirección alterna
+        coches.push(new Coche(Math.random() * canvas.width, y, anchoCoche, 20, velocidad));// Crea coche
+    }
 }
 
 function pintar() {
@@ -87,7 +94,7 @@ function pintar() {
         coches[i].dibujar(ctx);
 
         if (coches[i].colisionaCon(jugador)) {
-            playstop(); // ¡Choque! Fin del juego
+            playstop(); // Fin del juego
             return; 
         }
     }
