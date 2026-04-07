@@ -6,6 +6,7 @@ var ctx;
 var intervalId = 0;
 var puntos = 0;
 var jugador;
+var fondoImg;
 var coches = [];
 
 // ==========================================
@@ -19,6 +20,7 @@ class Jugador {
         this.imagen = new Image();
         this.imagen.src = 'jugador.png';
     }
+    
 
     mover(tecla, limiteAncho, limiteAlto) {
         var salto = 25;
@@ -35,7 +37,6 @@ class Jugador {
 
  dibujar(ctx) {
             ctx.drawImage(this.imagen, this.x, this.y, this.size, this.size);
-        
     }
 }
 
@@ -46,6 +47,17 @@ class Coche {
         this.w = w;
         this.h = h;
         this.v = v;
+
+        if (this.w === 30) {
+            this.imagen = new Image();
+            this.imagen.src = 'cochePeque.png';
+        } if (this.w === 45) {
+            this.imagen = new Image();
+            this.imagen.src = 'cochePeque.png';
+        } else {
+            this.imagen = new Image();
+            this.imagen.src = 'cochePeque.png';
+        }
     }
 
     actualizarPosicion(limiteAncho) {
@@ -55,9 +67,8 @@ class Coche {
         if (this.v < 0 && (this.x + this.w) < 0) this.x = limiteAncho;
     }
 
-    dibujar(ctx) {
-        ctx.fillStyle = "red";
-        ctx.fillRect(this.x, this.y, this.w, this.h);
+    dibujar(ctx) { //PUEDE DIBUJAR 3 COCHES, DE 30, DE 45 O DE 60
+        ctx.drawImage(this.imagen, this.x, this.y, this.w, this.h);
     }
 
     colisionaCon(j) {
@@ -73,23 +84,31 @@ class Coche {
 // ==========================================
 function crearCoches() {
     coches = [];
-    const filas = 8;        // nº filas coches
-    const margenSuelo = 60; // Espacio del inicio
-    const margenTecho = 40; // Espacio del final
+    const filas = 8;
+    const margenSuelo = 60;
+    const margenTecho = 40;
     
-    const zonaTráfico = canvas.height - margenSuelo - margenTecho; //Espacio donde hay coches
+    const zonaTráfico = canvas.height - margenSuelo - margenTecho;
     const distanciaEntreFilas = zonaTráfico / filas;
+    const tamañosPosibles = [30, 45, 60]; 
 
     for (let i = 0; i < filas; i++) {
         let y = margenTecho + (i * distanciaEntreFilas);
-        let anchoCoche = 30 + Math.random() * 30; // diferentes tamaños de coche
-        let velocidad = (Math.random() * 3 + 1) * (i % 2 === 0 ? 1 : -1); // Dirección alterna
-        coches.push(new Coche(Math.random() * canvas.width, y, anchoCoche, 20, velocidad));// Crea coche
+        
+        // 2. Seleccionamos un índice al azar entre 0 y 2
+        let indiceAleatorio = Math.floor(Math.random() * tamañosPosibles.length);
+        let anchoCoche = tamañosPosibles[indiceAleatorio];
+
+        let velocidad = (Math.random() * 3 + 1) * (i % 2 === 0 ? 1 : -1);
+        coches.push(new Coche(Math.random() * canvas.width, y, anchoCoche, 20, velocidad));
     }
 }
 
 function pintar() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (fondoImg.complete) { 
+        ctx.drawImage(fondoImg, 0, 0, canvas.width, canvas.height);
+    }
 
     for (var i = 0; i < coches.length; i++) {
         coches[i].actualizarPosicion(canvas.width);
@@ -106,9 +125,17 @@ function pintar() {
     // Llegar a la meta (borde superior)
     if (jugador.y <= 0) {
         puntos++;
-        log("¡Bien hecho! Puntos: " + puntos);
+        log("Partido en juego. Puntos: " + puntos);
         jugador.y = canvas.height - jugador.size - 10; 
+        actualizarVelocidadCoches()
     }
+}
+
+function actualizarVelocidadCoches() {
+
+    for (let coche of coches) {
+        coche.v *= 2; 
+    }    
 }
 
 function playstop() {
@@ -122,7 +149,6 @@ function playstop() {
         
         jugador = new Jugador(canvas.width / 2 - 10, canvas.height - 30);
         crearCoches();
-
         intervalId = setInterval(pintar, 20);
     }
 }
@@ -137,6 +163,8 @@ function log(text) {
 // ==========================================
 window.onload = function() {
     canvas = document.getElementById("canvas");
+    fondoImg = new Image();
+    fondoImg.src = 'fondo.png';
     
     if (canvas && canvas.getContext) {
         ctx = canvas.getContext("2d");
