@@ -173,7 +173,11 @@ window.onload = function() {
         if (boton) boton.addEventListener("click", playstop);
 
         document.addEventListener("keydown", function(event) {
+            const teclasJuego = [37, 38, 39, 40]; // ESTO ES PARA QUE NO HAGA SCROLL LA PANTALLA!!! Source:google
             if (intervalId) { 
+                if (teclasJuego.includes(event.keyCode)) {
+                    event.preventDefault();
+                }
                 jugador.mover(event.keyCode, canvas.width, canvas.height);
             }
         });
