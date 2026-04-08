@@ -173,3 +173,17 @@ img { /*imágenes de los alumnos */
         margin: 0 auto; 
     }
 }
+
+#canvasCont {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+canvas {
+    max-width: 100%;
+    height: auto;
+    border: 2px solid #333;
+    background-color: #000;
+}

@@ -8,6 +8,7 @@ var puntos = 0;
 var jugador;
 var fondoImg;
 var coches = [];
+var h = 40
 
 // ==========================================
 // 2. DEFINICIÓN DE CLASES
@@ -36,7 +37,7 @@ class Jugador {
     }
 
  dibujar(ctx) {
-            ctx.drawImage(this.imagen, this.x, this.y, this.size, this.size);
+            ctx.drawImage(this.imagen, this.x , this.y, this.size, this.size);
     }
 }
 
@@ -100,7 +101,7 @@ function crearCoches() {
         let anchoCoche = tamañosPosibles[indiceAleatorio];
 
         let velocidad = (Math.random() * 3 + 1) * (i % 2 === 0 ? 1 : -1);
-        coches.push(new Coche(Math.random() * canvas.width, y, anchoCoche, 20, velocidad));
+        coches.push(new Coche(Math.random() * canvas.width, y, anchoCoche, h, velocidad));
     }
 }
 
@@ -146,7 +147,6 @@ function playstop() {
     } else {
         puntos = 0;
         log("Partido en juego. Puntos: " + puntos);
-        
         jugador = new Jugador(canvas.width / 2 - 10, canvas.height - 30);
         crearCoches();
         intervalId = setInterval(pintar, 20);
@@ -156,6 +156,23 @@ function playstop() {
 function log(text) {
     var logDiv = document.getElementById("log");
     if (logDiv) logDiv.innerHTML = text;
+}
+
+function resizeCanvas() {
+    let ancho = window.innerWidth * 0.9;
+    
+    if (ancho > 800) ancho = 800;
+
+    canvas.width = ancho;
+    canvas.height = ancho * (2 / 3); 
+
+    if (jugador) {
+        jugador.x = canvas.width / 2 - 10;
+        jugador.y = canvas.height - 30;
+    }
+    if (intervalId) {
+        crearCoches(); 
+    }
 }
 
 // ==========================================
@@ -168,6 +185,9 @@ window.onload = function() {
     
     if (canvas && canvas.getContext) {
         ctx = canvas.getContext("2d");
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
         var boton = document.getElementById("playButton");
         if (boton) boton.addEventListener("click", playstop);

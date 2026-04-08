@@ -9,13 +9,78 @@
 </head>
 
 <body>
-        <nav class="menu-superior">
+    <nav class="menu-superior">
         <ul>
             <li><a href="index.html" class="boton">INICIO</a></li>
             <li><a href="alumnos.html" class="boton">NOSOTROS</a></li>
-            <li><a href="index.html" class="boton">¡JUGAR!</a></li>
+            <li><a href="juego.html" class="boton">¡JUGAR!</a></li>
             <li><a href="encuesta.html" class="boton">VALÓRANOS</a></li>
         </ul>
+    </nav>
+    <nav class="encuesta">
+        <h1>Encuesta de Valoración</h1>
+            <div class="encuesta">
+            <form id="formEncuesta">
+
+            <div class="pregunta">
+                <p>1. ¿Qué te ha parecido el juego?</p>
+                <label><input type="radio" name="p1" value="1"> Excelente</label><br>
+                <label><input type="radio" name="p1" value="2"> Perfecto</label><br>
+                <label><input type="radio" name="p1" value="3"> De diez</label><br>
+                <label><input type="radio" name="p1" value="4"> Matrícula de honor</label>
+            </div>
+
+            <div class="pregunta">
+                <p>2. ¿Qué nota nos vas a poner?</p>
+                <label><input type="radio" name="p2" value="1"> 10</label><br>
+                <label><input type="radio" name="p2" value="2"> 10</label><br>
+                <label><input type="radio" name="p2" value="3"> 10</label><br>
+                <label><input type="radio" name="p2" value="4"> Matrícula de honor</label>
+            </div>
+
+            <div class="pregunta">
+                <p>3. ¿Somos los mejores alumnos que has tenido</p>
+                <label><input type="radio" name="p3" value="1"> Si</label><br>
+                <label><input type="radio" name="p3" value="2"> Sin duda</label><br>
+                <label><input type="radio" name="p3" value="3"> Claramente</label><br>
+                <label><input type="radio" name="p3" value="4"> La duda ofende</label>
+            </div>
+
+            <div class="pregunta">
+                <p>4. ¿Cuál es tu animal favorito?</p>
+                <label><input type="radio" name="p4" value="1"> El maestro Oogway</label><br>
+                <label><input type="radio" name="p4" value="2"> El maestro Oogway</label><br>
+                <label><input type="radio" name="p4" value="3"> El maestro Oogway</label><br>
+                <label><input type="radio" name="p4" value="4"> El maestro Oogway</label>
+            </div>
+
+            <div class="pregunta">
+                <p>5. ¿Volverías a jugar?</p>
+                <label><input type="radio" name="p5" value="1"> Para ocasiones especiales</label><br>
+                <label><input type="radio" name="p5" value="2"> Me ha cambiado la vida, es decir, si</label><br>
+                <label><input type="radio" name="p5" value="3"> Sí</label><br>
+                <label><input type="radio" name="p5" value="4"> Muchas veces</label>
+            </div>
+
+            <button type="submit">Enviar</button>
+
+        </form>
+
+        <div class="resultado" id="resultado"></div>
+
+        <br>
+        <a href="index.html">Volver al menú</a>
+
+        </div>
+
+        <script>
+            document.getElementById("formEncuesta").addEventListener("submit", function(event){
+                event.preventDefault();
+
+                document.getElementById("resultado").innerText =
+                    "¡Gracias por tu valoración!";
+            });
+        </script>
     </nav>
 </body>
 
