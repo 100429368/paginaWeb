@@ -9,6 +9,7 @@ var jugador;
 var fondoImg;
 var coches = [];
 var h = 40
+var imagenesFondo = ['fondo.png', 'fondo2.png', 'fondo3.png', 'fondo4.png', 'fondo5.png'];
 
 // ==========================================
 // 2. DEFINICIÓN DE CLASES
@@ -68,10 +69,19 @@ class Coche {
         if (this.v < 0 && (this.x + this.w) < 0) this.x = limiteAncho;
     }
 
-    dibujar(ctx) { //PUEDE DIBUJAR 3 COCHES, DE 30, DE 45 O DE 60 TODOOOOOOOO
+    dibujar(ctx) {
+    if (this.v > 0) {
+        //  EFECTO ESPEJO PARA VELOCIDAD POSITIVA 
+        ctx.save(); // Guardamos el estado actual (rotación 0, escala 1, etc.)
+        ctx.translate(this.x + this.w, this.y); 
+        ctx.scale(-1, 1); //giro espejho
+        ctx.drawImage(this.imagen, 0, 0, this.w, this.h);//corrección, el espejo NO es desde el centro :(
+        ctx.restore(); // Restauramos el contexto para que el siguiente dibujo sea normal
+    } else {
+        // DIBUJO NORMAL PARA VELOCIDAD NEGATIVA 
         ctx.drawImage(this.imagen, this.x, this.y, this.w, this.h);
     }
-
+}
     colisionaCon(j) {
         return (j.x < this.x + this.w && 
                 j.x + j.size > this.x && 
@@ -88,7 +98,6 @@ function crearCoches() {
     const filas = 8;
     const margenSuelo = 60;
     const margenTecho = 40;
-    
     const zonaTráfico = canvas.height - margenSuelo - margenTecho;
     const distanciaEntreFilas = zonaTráfico / filas;
     const tamañosPosibles = [30, 45, 60]; 
@@ -129,8 +138,16 @@ function pintar() {
         log("Partido en juego. Puntos: " + puntos);
         jugador.y = canvas.height - jugador.size - 10; 
         actualizarVelocidadCoches()
+        cambiarFondo();
     }
 }
+
+
+function cambiarFondo() {
+    let indice = puntos 
+    fondoImg.src = imagenesFondo[indice];
+}
+
 
 function actualizarVelocidadCoches() {
 
@@ -146,6 +163,7 @@ function playstop() {
         log("Fin del juego. Puntuación: " + puntos);
     } else {
         puntos = 0;
+        fondoImg.src = imagenesFondo[0];
         log("Partido en juego. Puntos: " + puntos);
         jugador = new Jugador(canvas.width / 2 - 10, canvas.height - 30);
         crearCoches();
@@ -193,10 +211,10 @@ window.onload = function() {
         if (boton) boton.addEventListener("click", playstop);
 
         document.addEventListener("keydown", function(event) {
-            const teclasJuego = [37, 38, 39, 40]; // ESTO ES PARA QUE NO HAGA SCROLL LA PANTALLA!!! Source:google
+            const teclasJuego = [37, 38, 39, 40]; 
             if (intervalId) { 
                 if (teclasJuego.includes(event.keyCode)) {
-                    event.preventDefault();
+                    event.preventDefault();// ESTO ES PARA QUE NO HAGA SCROLL LA PANTALLA!!! Fuente:google, no lo conozco
                 }
                 jugador.mover(event.keyCode, canvas.width, canvas.height);
             }
