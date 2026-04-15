@@ -6,10 +6,9 @@ var ctx;
 var intervalId = 0;
 var puntos = 0;
 var jugador;
-var fondoImg;
 var coches = [];
 var h = 40
-var imagenesFondo = ['fondo.png', 'fondo2.png', 'fondo3.png', 'fondo4.png', 'fondo5.png'];
+var fondo
 
 // ==========================================
 // 2. DEFINICIÓN DE CLASES
@@ -41,6 +40,7 @@ class Jugador {
             ctx.drawImage(this.imagen, this.x , this.y, this.size, this.size);
     }
 }
+
 
 class Coche {
     constructor(x, y, w, h, v) {
@@ -90,6 +90,33 @@ class Coche {
     }
 }
 
+class Fondo {
+    constructor(rutas) {
+        this.imagenes = rutas;
+        this.indice = 0;
+        this.imagen = new Image();
+        this.imagen.src = this.imagenes[this.indice];
+    }
+
+    cambiar(puntos) {
+        // Aseguramos que el índice no supere el tamaño del array de imágenes
+        this.indice = puntos % this.imagenes.length;
+        this.imagen.src = this.imagenes[this.indice];
+    }
+
+    reiniciar() {
+        this.indice = 0;
+        this.imagen.src = this.imagenes[0];
+    }
+
+    dibujar(ctx, width, height) {
+        if (this.imagen.complete) {
+            ctx.drawImage(this.imagen, 0, 0, width, height);
+        }
+    }
+}
+
+
 // ==========================================
 // 3. FUNCIONES DEL JUEGO
 // ==========================================
@@ -116,9 +143,8 @@ function crearCoches() {
 
 function pintar() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if (fondoImg.complete) { 
-        ctx.drawImage(fondoImg, 0, 0, canvas.width, canvas.height);
-    }
+    fondo.dibujar(ctx, canvas.width, canvas.height);
+ 
 
     for (var i = 0; i < coches.length; i++) {
         coches[i].actualizarPosicion(canvas.width);
@@ -144,10 +170,8 @@ function pintar() {
 
 
 function cambiarFondo() {
-    let indice = puntos 
-    fondoImg.src = imagenesFondo[indice];
+    fondo.cambiar(puntos);
 }
-
 
 function actualizarVelocidadCoches() {
 
@@ -163,7 +187,7 @@ function playstop() {
         log("Fin del juego. Puntuación: " + puntos);
     } else {
         puntos = 0;
-        fondoImg.src = imagenesFondo[0];
+        fondo.reiniciar();
         log("Partido en juego. Puntos: " + puntos);
         jugador = new Jugador(canvas.width / 2 - 10, canvas.height - 30);
         crearCoches();
@@ -198,8 +222,8 @@ function resizeCanvas() {
 // ==========================================
 window.onload = function() {
     canvas = document.getElementById("canvas");
-    fondoImg = new Image();
-    fondoImg.src = 'fondo.png';
+    const rutasFondo = ['fondo.png', 'fondo2.png', 'fondo3.png', 'fondo4.png', 'fondo5.png'];
+    fondo = new Fondo(rutasFondo);
     
     if (canvas && canvas.getContext) {
         ctx = canvas.getContext("2d");
