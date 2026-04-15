@@ -19,7 +19,7 @@ class Jugador {
         this.x = x;
         this.y = y;
         this.imagen = new Image();
-        this.imagen.src = 'jugador.png';
+        this.imagen.src = 'jugador.png'; // TODO CAMBIAR AQUI IMAGEN DEL JUGADOR
     }
     
 
@@ -52,13 +52,13 @@ class Coche {
 
         if (this.w === 30) {
             this.imagen = new Image();
-            this.imagen.src = 'cochePeque.png';
+            this.imagen.src = 'cochePeque.png'; // TODO CAMBIAR AQUI IMAGEN DEL COCHE
         } if (this.w === 45) {
             this.imagen = new Image();
-            this.imagen.src = 'cochePeque.png';
+            this.imagen.src = 'cochePeque.png'; // TODO CAMBIAR AQUI IMAGEN DEL COCHE
         } else {
             this.imagen = new Image();
-            this.imagen.src = 'cochePeque.png';
+            this.imagen.src = 'cochePeque.png'; // TODO CAMBIAR AQUI IMAGEN DEL COCHE
         }
     }
 
@@ -222,7 +222,7 @@ function resizeCanvas() {
 // ==========================================
 window.onload = function() {
     canvas = document.getElementById("canvas");
-    const rutasFondo = ['fondo.png', 'fondo2.png', 'fondo3.png', 'fondo4.png', 'fondo5.png'];
+    const rutasFondo = ['fondo.png', 'fondo2.png', 'fondo3.png', 'fondo4.png', 'fondo5.png']; // TODO CAMBIAR AQUI NOMBRE DE IMAGENES  DEL FONDO
     fondo = new Fondo(rutasFondo);
     
     if (canvas && canvas.getContext) {
