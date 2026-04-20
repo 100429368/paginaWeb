@@ -181,10 +181,9 @@ function cambiarFondo() {
 }
 
 function actualizarVelocidadCoches() {
-
-    for (let coche of coches) {
+    coches.forEach(coche => {
         coche.v *= 2; 
-    }    
+    });
 }
 
 function playstop() {
