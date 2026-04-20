@@ -174,7 +174,14 @@ img { /*imágenes de los alumnos */
     }
 }
 
-
+/*Escapa el logotipo*/
+@media (max-width: 480px) {
+    #logoGrupo {
+        transform: scale(0.8);
+        bottom: 10px;
+        right: 10px;
+    }
+}
 
 canvas {
     max-width: 100%;
@@ -182,6 +189,9 @@ canvas {
     border: 2px solid #333;
     background-color: #000;
 }
+
+
+/*VIDEO*/
 
 #canvasCont {
     position: relative;      /* Permite que el vídeo se pegue a sus bordes */
@@ -206,3 +216,23 @@ canvas {
     object-fit: cover;       /* No se deforma, rellena el espacio */
     z-index: 100;            /* Asegura que esté por encima de todo */
 }
+
+
+/*LOGOTIPO!!*/
+/* Estilos para el logotipo fijo */
+#logoGrupo {
+    position: fixed;      /* Se queda siempre visible en la esquina */
+    bottom: 20px;         /* Distancia desde el borde inferior */
+    right: 20px;          /* Distancia desde el borde derecho */
+    z-index: 1000;        /* Por encima de canvas y video */
+    cursor: pointer;      /* Cambia el cursor al pasar por encima */
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0.9;
+}
+
+/* Efecto al pasar el ratón */
+#logoGrupo:hover {
+    opacity: 1;
+    transform: scale(1.1); /* Crece un poquito */
+}
+
