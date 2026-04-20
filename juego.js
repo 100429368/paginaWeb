@@ -9,6 +9,7 @@ var jugador;
 var coches = [];
 var h = 40
 var fondo
+const video = document.getElementById('miVideo');
 
 // ==========================================
 // 2. DEFINICIÓN DE CLASES
@@ -57,7 +58,7 @@ class Coche {
             this.imagen = new Image();
             this.imagen.src = 'cochePeque.png'; // TODO CAMBIAR AQUI IMAGEN DEL COCHE
         } else {
-            this.imagen = new Image();
+            this.imagen = new Image(); //tamaño = 60
             this.imagen.src = 'cochePeque.png'; // TODO CAMBIAR AQUI IMAGEN DEL COCHE
         }
     }
@@ -129,7 +130,8 @@ function crearCoches() {
     const distanciaEntreFilas = zonaTráfico / filas;
     const tamañosPosibles = [30, 45, 60]; 
 
-    for (let i = 0; i < filas; i++) {
+    
+    Array(filas).fill().forEach((_, i) => {
         let y = margenTecho + (i * distanciaEntreFilas);
         
         // 2. Seleccionamos un índice al azar entre 0 y 2
@@ -138,36 +140,41 @@ function crearCoches() {
 
         let velocidad = (Math.random() * 3 + 1) * (i % 2 === 0 ? 1 : -1);
         coches.push(new Coche(Math.random() * canvas.width, y, anchoCoche, h, velocidad));
-    }
+    });
 }
-
 function pintar() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     fondo.dibujar(ctx, canvas.width, canvas.height);
- 
 
-    for (var i = 0; i < coches.length; i++) {
-        coches[i].actualizarPosicion(canvas.width);
-        coches[i].dibujar(ctx);
+    // IMPORTANTE: Declarar la variable aquí
+    let colisionDetectada = false;
 
-        if (coches[i].colisionaCon(jugador)) {
-            playstop(); // Fin del juego
-            return; 
+    coches.forEach((coche) => {
+        coche.actualizarPosicion(canvas.width);
+        coche.dibujar(ctx);
+
+        if (coche.colisionaCon(jugador)) {
+            colisionDetectada = true;
         }
+    });
+    
+    // Si hubo colisión, ejecutamos el fin del juego y cortamos la función
+    if (colisionDetectada) {
+        playstop(); 
+        reproducirVideo();
+        return; 
     }
 
     jugador.dibujar(ctx);
 
-    // Llegar a la meta (borde superior)
     if (jugador.y <= 0) {
         puntos++;
         log("Partido en juego. Puntos: " + puntos);
         jugador.y = canvas.height - jugador.size - 10; 
-        actualizarVelocidadCoches()
+        actualizarVelocidadCoches();
         cambiarFondo();
     }
 }
-
 
 function cambiarFondo() {
     fondo.cambiar(puntos);
@@ -250,3 +257,12 @@ window.onload = function() {
         alert("Tu navegador no soporta Canvas.");
     }
 };
+
+// ==========================================
+// 5. FUNCIONES DEL VÍDEO
+// ==========================================
+function reproducirVideo() {
+    video.style.display = "block";
+    video.currentTime = 0;
+    video.play();
+}
