@@ -37,7 +37,12 @@
 /*************** PARTE INDEX HTML, INICIAL ***************/
 
 body {
-    background: linear-gradient(135deg, #e0f2f1 0%, #d1c4e9 100%);
+    background-image: url('Fondos.png'); 
+    background-size: cover;  
+    background-position: center; 
+    background-attachment: fixed; /*ASI N O HACE SCROLL*/
+    background-repeat: no-repeat; 
+    
     font-family: sans-serif;
     margin: 0;
     padding: 50px 20px;
@@ -50,27 +55,47 @@ body {
 /*  TÍTULO PRINCIPAL  */
 h1 {
     font-weight: 900;
-    font-size: 2.5rem; /* Título grande, 2,5 veces relativo al tamaño de la raiz , creo */
-    color: #2F4F4F; /* Texto oscuro */
+    font-size: 3rem; /* Un poco más grande para que imponga */
     text-transform: uppercase;
-    letter-spacing: 8px;
+    letter-spacing: 5px;
     text-align: center;
-    background: linear-gradient(to right, #4f1c8e99, #7832E3, #b39ddb);    /* degradado */
-    background-clip: text;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border: 1px solid #eee;    border-radius: 30px;
-    padding: 20px;
-    color: transparent;
-    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
-    margin-bottom: 0;
+    
+    /* FONDO: Oscuro y desenfocado para que no parezca un pegote */
+    background: rgba(0, 0, 0, 0.6); /* Negro con transparencia */
+    backdrop-filter: blur(5px);      /* Desenfoca el fondo de estrellitas solo detrás del texto */
+    -webkit-backdrop-filter: blur(5px);
+    
+    /* BORDE: Un neón que combine con el morado de tu logo */
+    border: 3px solid #7832E3;
+    border-radius: 15px; /* Menos redondeado queda más profesional */
+    
+    padding: 15px 40px;
+    display: inline-block;
+    margin-bottom: 30px;
+    
+    /* TEXTO: Efecto de iluminación */
+    color: #fff;
+    text-shadow: 0 0 10px #7832E3, 0 0 20px #7832E3; /* Resplandor morado */
+    
+    box-shadow: 0 0 20px rgba(120, 50, 227, 0.4); /* Brillo exterior */
 }
+
+/* Limpiamos lo que tenías en el ID para que no haga conflicto */
+#tituloInicial {
+    color: white !important;
+    background-clip: initial;
+    -webkit-background-clip: initial;
+}
+
+/* Importante: Elimina o comenta el "color: transparent" que tenías antes 
+   si quieres que se vea el color del texto */
 
 #tituloInicial{
     color: #2f4f4f70; /*  Quiero color diferente  en este en concreto*/
 }
 
 /* Imagen del principio y su animación */
-.po-imagen {
+.imagen-central {
     width: 50%; 
     display: block;      
     margin-left: auto;    
@@ -221,3 +246,5 @@ canvas {
 #logoGrupo:hover {
     transform: scale(1.1);
 }
+
+
