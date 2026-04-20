@@ -1,8 +1,4 @@
 /*********** MENU SUPERIOR **************/
-
-* {
-    box-sizing: border-box;
-}
 /* ojo, esto está en todas las páginas */
 .menu-superior {
     background-color: #00000091; 
@@ -174,14 +170,6 @@ img { /*imágenes de los alumnos */
     }
 }
 
-/*Escapa el logotipo*/
-@media (max-width: 480px) {
-    #logoGrupo {
-        transform: scale(0.8);
-        bottom: 10px;
-        right: 10px;
-    }
-}
 
 canvas {
     max-width: 100%;
@@ -219,7 +207,6 @@ canvas {
 
 
 /*LOGOTIPO!!*/
-/* Estilos para el logotipo fijo */
 #logoGrupo {
     position: fixed;      /* Se queda siempre visible en la esquina */
     bottom: 20px;         /* Distancia desde el borde inferior */
@@ -232,7 +219,5 @@ canvas {
 
 /* Efecto al pasar el ratón */
 #logoGrupo:hover {
-    opacity: 1;
-    transform: scale(1.1); /* Crece un poquito */
+    transform: scale(1.1);
 }
-

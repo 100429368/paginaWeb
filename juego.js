@@ -10,6 +10,7 @@ var coches = [];
 var h = 40
 var fondo
 const video = document.getElementById('miVideo');
+const teclasPresionadas = {};
 
 // ==========================================
 // 2. DEFINICIÓN DE CLASES
@@ -19,23 +20,22 @@ class Jugador {
         this.size = 20;
         this.x = x;
         this.y = y;
+        this.vy = 0;
+        this.vx = 0;
+        this.velocidadMax = 5;
         this.imagen = new Image();
         this.imagen.src = 'jugador.png'; // TODO CAMBIAR AQUI IMAGEN DEL JUGADOR
     }
     
+    actualizar(limiteAlto,limiteAncho){
+        this.x += this.vx;
+        this.y += this.vy;
 
-    mover(tecla, limiteAncho, limiteAlto) {
-        var salto = 25;
-        if (tecla == 38) this.y -= salto; // Arriba
-        if (tecla == 40) this.y += salto; // Abajo
-        if (tecla == 37) this.x -= salto; // Izquierda
-        if (tecla == 39) this.x += salto; // Derecha
-
-        // Comprobar límites para no salirse del canvas
         if (this.x < 0) this.x = 0;
         if (this.x + this.size > limiteAncho) this.x = limiteAncho - this.size;
         if (this.y + this.size > limiteAlto) this.y = limiteAlto - this.size;
     }
+
 
  dibujar(ctx) {
             ctx.drawImage(this.imagen, this.x , this.y, this.size, this.size);
@@ -146,9 +146,13 @@ function pintar() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     fondo.dibujar(ctx, canvas.width, canvas.height);
 
-    // IMPORTANTE: Declarar la variable aquí
     let colisionDetectada = false;
 
+    // 1. Gestionar movimiento suave del jugador
+    gestionarTeclado();
+    jugador.actualizar(canvas.width, canvas.height);
+
+    // 2. Coches (usando forEach como pediste)
     coches.forEach((coche) => {
         coche.actualizarPosicion(canvas.width);
         coche.dibujar(ctx);
@@ -157,16 +161,17 @@ function pintar() {
             colisionDetectada = true;
         }
     });
-    
-    // Si hubo colisión, ejecutamos el fin del juego y cortamos la función
+
     if (colisionDetectada) {
         playstop(); 
         reproducirVideo();
         return; 
     }
 
+    // 3. Dibujar jugador
     jugador.dibujar(ctx);
 
+    // 4. Meta
     if (jugador.y <= 0) {
         puntos++;
         log("Partido en juego. Puntos: " + puntos);
@@ -175,7 +180,6 @@ function pintar() {
         cambiarFondo();
     }
 }
-
 function cambiarFondo() {
     fondo.cambiar(puntos);
 }
@@ -226,6 +230,17 @@ function resizeCanvas() {
     }
 }
 
+function gestionarTeclado() {
+    // Reseteamos velocidad y la aplicamos según las teclas activas
+    jugador.vx = 0;
+    jugador.vy = 0;
+
+    if (teclasPresionadas[38]) jugador.vy = -jugador.velocidadMax; // Arriba
+    if (teclasPresionadas[40]) jugador.vy = jugador.velocidadMax;  // Abajo
+    if (teclasPresionadas[37]) jugador.vx = -jugador.velocidadMax; // Izquierda
+    if (teclasPresionadas[39]) jugador.vx = jugador.velocidadMax;  // Derecha
+}
+
 // ==========================================
 // 4. ARRANQUE (Al cargar la ventana!!)
 // ==========================================
@@ -264,6 +279,7 @@ window.onload = function() {
     const videoGameOver = document.getElementById('miVideo');
 
     // Le decimos escuchador del evento 'ended' (cuando termina el video)
+    //Evento que NO es de usuario!!
     videoGameOver.addEventListener('ended', function() {
         //Esconder vídeo
         videoGameOver.style.display = "none";
@@ -281,3 +297,14 @@ function reproducirVideo() {
     video.currentTime = 0;
     video.play();
 }
+
+/*EVENTOS*/
+
+// Eventos globales
+document.addEventListener("keydown", (e) => { 
+    teclasPresionadas[e.keyCode] = true; 
+    if([37,38,39,40].includes(e.keyCode)) e.preventDefault();
+});
+document.addEventListener("keyup", (e) => { 
+    teclasPresionadas[e.keyCode] = false; 
+});
