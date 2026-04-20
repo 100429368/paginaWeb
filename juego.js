@@ -130,7 +130,7 @@ function crearCoches() {
     const distanciaEntreFilas = zonaTráfico / filas;
     const tamañosPosibles = [30, 45, 60]; 
 
-    
+    //creamos un array del tamaño filas, lo rellenamos con "undefined" y por cada elemento, lo rellenamos
     Array(filas).fill().forEach((_, i) => {
         let y = margenTecho + (i * distanciaEntreFilas);
         
@@ -187,11 +187,14 @@ function actualizarVelocidadCoches() {
 }
 
 function playstop() {
+    const video = document.getElementById('miVideo');
     if (intervalId) {
         clearInterval(intervalId);
         intervalId = 0;
         log("Fin del juego. Puntuación: " + puntos);
     } else {
+        video.pause();
+        video.style.display = "none"; // Escondemos el vídeo
         puntos = 0;
         fondo.reiniciar();
         log("Partido en juego. Puntos: " + puntos);
@@ -261,6 +264,7 @@ window.onload = function() {
 // 5. FUNCIONES DEL VÍDEO
 // ==========================================
 function reproducirVideo() {
+    const video = document.getElementById('miVideo');
     video.style.display = "block";
     video.currentTime = 0;
     video.play();

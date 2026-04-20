@@ -174,16 +174,35 @@ img { /*imágenes de los alumnos */
     }
 }
 
-#canvasCont {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 10px 0;
-}
+
 
 canvas {
     max-width: 100%;
     height: auto;
     border: 2px solid #333;
     background-color: #000;
+}
+
+#canvasCont {
+    position: relative;      /* Permite que el vídeo se pegue a sus bordes */
+    display: inline-block;   /* Se ajusta exactamente al tamaño del canvas */
+    line-height: 0;          /* Quita un pequeño margen fantasma que dejan los canvas */
+    margin: 20px auto;       /* Lo centra en la pantalla */
+    border: 5px solid #2F4F4F; /* Opcional: un borde para decorar el juego */
+    border-radius: 10px;
+    overflow: hidden;        /* Para que el vídeo respete las esquinas redondeadas */
+    display: block; /* Cambia inline-block por block si no se centra bien */
+    max-width: 600px; /* El mismo ancho que tu canvas */
+    width: 100%;
+}
+
+#miVideo {
+    display: none;           /* Se activa desde JS */
+    position: absolute;      /* Flota sobre el canvas */
+    top: 0;
+    left: 0;
+    width: 100%;             /* Mismo ancho que el canvas */
+    height: 100%;            /* Mismo alto que el canvas */
+    object-fit: cover;       /* No se deforma, rellena el espacio */
+    z-index: 100;            /* Asegura que esté por encima de todo */
 }
