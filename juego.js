@@ -27,14 +27,21 @@ class Jugador {
         this.imagen.src = 'jugador.png'; // TODO CAMBIAR AQUI IMAGEN DEL JUGADOR
     }
     
-    actualizar(limiteAlto,limiteAncho){
-        this.x += this.vx;
-        this.y += this.vy;
+   actualizar(limiteAncho, limiteAlto) { 
+    this.x += this.vx;
+    this.y += this.vy;
 
-        if (this.x < 0) this.x = 0;
-        if (this.x + this.size > limiteAncho) this.x = limiteAncho - this.size;
-        if (this.y + this.size > limiteAlto) this.y = limiteAlto - this.size;
+    // Limitar eje X (Lados)
+    if (this.x < 0) this.x = 0;
+    if (this.x + this.size > limiteAncho) {
+        this.x = limiteAncho - this.size;
     }
+
+    // Limitar eje Y hacia ABAJO
+    if (this.y + this.size > limiteAlto) {
+        this.y = limiteAlto - this.size;
+    }
+}
 
 
  dibujar(ctx) {
