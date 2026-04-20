@@ -258,6 +258,18 @@ window.onload = function() {
     } else {
         alert("Tu navegador no soporta Canvas.");
     }
+
+    /*SI TERMINA EL VÍDEO:  */
+    // Buscamos el video
+    const videoGameOver = document.getElementById('miVideo');
+
+    // Le decimos escuchador del evento 'ended' (cuando termina el video)
+    videoGameOver.addEventListener('ended', function() {
+        //Esconder vídeo
+        videoGameOver.style.display = "none";
+        //reiniciar
+        playstop(); 
+    });
 };
 
 // ==========================================
