@@ -75,24 +75,17 @@ h1 {
     
     /* TEXTO: Efecto de iluminación */
     color: #fff;
-    text-shadow: 0 0 10px #7832E3, 0 0 20px #7832E3; /* Resplandor morado */
-    
-    box-shadow: 0 0 20px rgba(120, 50, 227, 0.4); /* Brillo exterior */
+    text-shadow: 0 0 10px #7832E3, 0 0 20px #7832E3; 
+    box-shadow: 0 0 20px rgba(120, 50, 227, 0.4); 
 }
 
-/* Limpiamos lo que tenías en el ID para que no haga conflicto */
 #tituloInicial {
-    color: white !important;
+    color: white ;
     background-clip: initial;
     -webkit-background-clip: initial;
 }
 
-/* Importante: Elimina o comenta el "color: transparent" que tenías antes 
-   si quieres que se vea el color del texto */
 
-#tituloInicial{
-    color: #2f4f4f70; /*  Quiero color diferente  en este en concreto*/
-}
 
 /* Imagen del principio y su animación */
 .imagen-central {
@@ -130,9 +123,9 @@ table {
     border-collapse: separate;
 }
 
-/* TARJETAS  */
+/* TARJETAS  ALUMNOS */
 td {
-    background: #ffffff;
+    background: rgba(0, 0, 0, 0.6); /* Negro con transparencia */
     border-radius: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border: 1px solid #eee;    
@@ -141,6 +134,9 @@ td {
     position: relative;
     overflow: hidden;
     animation: animacionAparecer 0.7s ease-out forwards;  
+    color: #fff;
+    text-shadow: 0 0 10px #7832E3, 0 0 20px #7832E3; /* Resplandor morado */
+    box-shadow: 0 0 20px rgba(120, 50, 227, 0.4); /* Brillo exterior */
 }
 
 img { /*imágenes de los alumnos */
